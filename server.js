@@ -1,5 +1,6 @@
 // Module dependencies.
 const express = require('express')
+const mongoose = require('mongoose')
 const app = express()
 
 // JSON config
@@ -13,9 +14,19 @@ app.use(express.json())
 // General
 
 app.get('/', (req, res) => {
-  res.send('Test my app!')
+  res.json({ message: 'Test my app!' })
 })
 
-app.listen(3000, () => {
-  console.log('SERVER RUNNING IN http://localhost:3000')
-})
+// Connection database
+mongoose
+  .connect(
+    'mongodb+srv://GabrielMarinho:dVmyNHT49DZQQ20X@elearningcluster.oohsgbh.mongodb.net/?retryWrites=true&w=majority'
+  )
+  .then(() => {
+    app.listen(3000, () => {
+      console.log('SERVER RUNNING IN http://localhost:3000')
+    })
+  })
+  .catch(e => {
+    console.log(e)
+  })

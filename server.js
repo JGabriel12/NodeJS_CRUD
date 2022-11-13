@@ -13,8 +13,30 @@ app.use(
 )
 app.use(express.json())
 
-// General
+// API Routes
 
+// Users
+
+app.post('/user/create', async (req, res) => {
+  const { full_name, email, password } = req.body
+
+  // if (!full_name) res.status(422).json({ Error: 'Name value cannot be null!' })
+
+  const user = {
+    full_name,
+    email,
+    password
+  }
+
+  try {
+    await User.create(user)
+    res.status(201).json({ Message: 'Create success!' })
+  } catch (e) {
+    res.status(500).json({ Error: e })
+  }
+})
+
+// Index
 app.get('/', (req, res) => {
   res.json({ message: 'Test my app!' })
 })

@@ -3,6 +3,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
+const User = require('./src/models/User')
+
 // JSON config
 app.use(
   express.urlencoded({

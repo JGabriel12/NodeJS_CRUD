@@ -1,5 +1,16 @@
+// Module dependencies.
 const express = require('express')
 const app = express()
+
+// JSON config
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+)
+app.use(express.json())
+
+// General
 
 app.get('/', (req, res) => {
   res.send('Test my app!')

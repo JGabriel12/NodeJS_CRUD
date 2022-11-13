@@ -49,8 +49,35 @@ router.get('/:id', async (req, res) => {
 })
 
 // User - Update
+router.patch('/:id', async (req, res) => {
+  const id = req.params.id
+
+  const { full_name, email, password } = req.body
+  const user = {
+    full_name,
+    email,
+    password
+  }
+
+  try {
+    const updateUser = await User.updateOne({ _id: id }, user)
+    res.status(200).json(user)
+  } catch (e) {
+    res.status(500).json({ Error: e })
+  }
+})
 // User - Delete
 
+router.delete('/:id', async (req, res) => {
+  const id = req.params.id
+
+  try {
+    await User.deleteOne({ _id: id })
+    res.status(200).json({ Message: 'Deleted user success!' })
+  } catch (e) {
+    res.status(500).json({ Error: e })
+  }
+})
 // Index
 router.get('/', (req, res) => {
   res.json({ message: 'Test my app!' })

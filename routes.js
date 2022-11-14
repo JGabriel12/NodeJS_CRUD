@@ -78,8 +78,10 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ Error: e })
   }
 })
+
 // Index
 router.get('/', (req, res) => {
   res.json({ message: 'Test my app!' })
 })
+
 module.exports = router

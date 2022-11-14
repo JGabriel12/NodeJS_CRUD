@@ -6,6 +6,19 @@ const app = express()
 
 const routes = require('./routes')
 
+// Connection database - Emit
+mongoose
+  .connect(process.env.CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    app.emit('success')
+  })
+  .catch(e => {
+    console.log(e)
+  })
+
 // JSON config
 app.use(
   express.urlencoded({
@@ -15,25 +28,14 @@ app.use(
 app.use(express.json())
 
 // API Routes
-
 // User
 app.use('/user', routes)
-
 // Index
-
 app.use('/', routes)
 
-// Connection database
-mongoose
-  .connect(process.env.CONNECTION_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+// Connection database - on
+app.on('success', () => {
+  app.listen(3000, () => {
+    console.log('SERVER RUNNING IN http://localhost:3000')
   })
-  .then(() => {
-    app.listen(3000, () => {
-      console.log('SERVER RUNNING IN http://localhost:3000')
-    })
-  })
-  .catch(e => {
-    console.log(e)
-  })
+})
